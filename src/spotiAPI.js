@@ -93,8 +93,7 @@ function displayTrakcs(playlists) {
 		document.querySelector('ul').insertAdjacentHTML('afterbegin', x);
 	});
 }
- 
-
+ console.log('test')
 function populateUI(profile) {
 	document.getElementById('displayName').innerText = profile.display_name;
 	if (profile.images[0]) {
