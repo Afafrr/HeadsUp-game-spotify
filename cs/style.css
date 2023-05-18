@@ -7,6 +7,7 @@
 }
 
 html {
+  font-size: 62.5%;
   background-image: linear-gradient(#fff, rgba(95, 134, 141, 0.438)); /* fallback color */
   height: 100%;
 }
@@ -18,8 +19,14 @@ body {
 h1 {
   margin: 2%;
   text-align: center;
-  font-size: 50px;
+  font-size: 5rem;
   letter-spacing: 3px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2.3rem;
+  margin-bottom: 5px;
 }
 
 .playlistButton {
@@ -31,7 +38,7 @@ h1 {
 .playlistButton a {
   padding: 20px 80px;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 2rem;
   background-color: #fff;
   border-radius: 25px;
   color: black;
@@ -42,36 +49,6 @@ h1 {
   color: #fff;
   text-shadow: 1px 0px 20px grey;
   box-shadow: 0px 0px 5px grey;
-  cursor: pointer;
-}
-
-.showPlaylists {
-  position: absolute;
-  left: 50%;
-  max-height: 30vh;
-  top: 50%;
-  width: 70vw;
-  background-color: #fff;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  overflow-y: auto;
-}
-.showPlaylists ul {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-.showPlaylists ul li {
-  margin: 10px;
-}
-.showPlaylists button {
-  position: absolute;
-  right: 0px;
-  margin: 10px 15px;
-  padding: 15px;
-  border: none;
-  background-color: transparent;
-  font-size: 20px;
   cursor: pointer;
 }
 
@@ -96,9 +73,11 @@ section {
 }
 
 .profileInfo {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
   width: 80vw;
-  height: 400px;
+  max-width: 1200px;
+  min-height: 450px;
   background-color: rgb(90, 192, 233);
   border-radius: 150px;
 }
@@ -107,14 +86,123 @@ p {
   display: inline-block;
 }
 
-#avatar img {
+#avatar {
   position: relative;
   top: 60px;
   left: 60px;
-  height: 15vw;
-  width: 15vw;
+}
+#avatar img {
+  transition: height 0.3s, width 0.3s;
+  height: 200px;
+  width: 200px;
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
-  transition: top, left 4s;
+}
+
+.bar {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.lastTracks {
+  display: grid;
+  justify-self: center;
+  align-self: center;
+  position: relative;
+  right: 20px;
+  margin-right: 50px;
+  max-width: 350px;
+}
+.lastTracks .bar:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.lastTracks .bar {
+  padding: 10px 10px;
+  border-radius: 20px;
+}
+.lastTracks .bar .songArtistNames {
+  overflow: hidden;
+  margin: 0px 15px;
+  display: flex;
+  flex-direction: column;
+}
+.lastTracks .bar .songName {
+  text-align: right;
+  font-size: 1.7rem;
+}
+.lastTracks .bar .artist {
+  text-align: right;
+  overflow: hidden;
+  margin-top: 3px;
+  font-size: 1.4rem;
+}
+.lastTracks .bar img {
+  position: relative;
+  height: 50px;
+}
+
+.showPlaylists {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-height: 60vh;
+  width: 80vw;
+  max-width: 600px;
+  background-color: rgba(221, 221, 221, 0.6);
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  overflow-y: auto;
+}
+.showPlaylists button {
+  position: absolute;
+  right: 0px;
+  margin: 10px 15px;
+  padding: 15px;
+  border: none;
+  background-color: transparent;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.showPlaylists p {
+  display: inline-block;
+  margin: 1em;
+  font-size: 2rem;
+}
+.showPlaylists .userPlaylists {
+  top: 50px;
+  background-color: #fff;
+}
+.showPlaylists .bar {
+  padding: 1em;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  border-radius: 0px;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+.showPlaylists .bar:hover {
+  background-color: rgba(221, 221, 221, 0.3);
+}
+.showPlaylists .playlistName {
+  align-self: center;
+  font-size: 2rem;
+}
+.showPlaylists img {
+  width: 6rem;
+  height: 6rem;
+  margin-right: 50px;
+  justify-self: end;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media (max-width: 1200px) {
+  #avatar img {
+    height: 150px;
+    width: 150px;
+  }
 }/*# sourceMappingURL=style.css.map */

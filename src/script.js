@@ -15,3 +15,8 @@ document.querySelector('.bgcBlur').addEventListener('click', function () {
 	showPlaylist.classList.add('hide');
 	bgcBlur.classList.add('hide');
 });
+
+// document.querySelector('.bar .Playlist').addEventListener('click', function() {
+
+
+// })

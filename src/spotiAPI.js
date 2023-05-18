@@ -8,9 +8,11 @@ if (!code) {
 	const accessToken = await getAccessToken(clientId, code);
 	const profile = await fetchProfile(accessToken);
 	const playlists = await getPlaylist(accessToken);
+	const topItems = await getUsersTopItems(accessToken);
 	populateUI(profile);
 	displayTrakcs(playlists);
-	console.log(profile);
+	lastTracks(topItems);
+	console.log(topItems);
 }
 
 export async function redirectToAuthCodeFlow(clientId) {
@@ -23,7 +25,7 @@ export async function redirectToAuthCodeFlow(clientId) {
 	params.append('client_id', clientId);
 	params.append('response_type', 'code');
 	params.append('redirect_uri', 'http://localhost:5173/callback');
-	params.append('scope', 'user-read-private user-read-email');
+	params.append('scope', 'user-read-private user-top-read');
 	params.append('code_challenge_method', 'S256');
 	params.append('code_challenge', challenge);
 
@@ -75,6 +77,44 @@ async function getPlaylist(token) {
 
 	return await result.json();
 }
+function displayTrakcs(playlists) {
+	playlists.items.forEach(element => {
+		const x = `<div class="bar Playlist"> <img src='${element.images[0].url}' height='40px'></img> <div class ='playlistName'>${element.name}</div></div> 
+			`;
+		document.querySelector('.userPlaylists').insertAdjacentHTML('afterbegin', x);
+	});
+}
+
+async function getUsersTopItems(token) {
+	let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5';
+	const result = await fetch(`${url}`, {
+		method: 'GET',
+		headers: { Authorization: `Bearer ${token}` },
+	});
+
+	return await result.json();
+}
+
+function lastTracks(topItems) {
+	if ((topItems.items.length === 0)) {
+		document.querySelector('h2').innerText = "You haven't listened to music for a month :c";
+	}else{
+		topItems.items.forEach(element => {
+			let allArtists = '';
+			element.artists.forEach(artist => {
+				allArtists += artist.name + ' ';
+			});
+			const x = `<div class="bar"> 
+			<div class="songArtistNames">
+			<p class="songName"> ${element.name}</p>
+			<p class="artist"> ${allArtists} </p> </div>
+			<img src='${element.album.images[2].url}' ></img>
+			</div>`;
+			document.querySelector('.lastTracks').insertAdjacentHTML('beforeend', x);
+		});
+	
+	}
+}
 
 async function fetchProfile(token) {
 	const result = await fetch('https://api.spotify.com/v1/me', {
@@ -85,22 +125,12 @@ async function fetchProfile(token) {
 	return await result.json();
 }
 
-function displayTrakcs(playlists) {
-	console.log(playlists);
-	playlists.items.forEach(element => {
-		const x = `<li> <img src='${element.images[0].url}' height='40px'></img> ${element.name}</li>`;
-
-		document.querySelector('ul').insertAdjacentHTML('afterbegin', x);
-	});
-}
- console.log('test')
 function populateUI(profile) {
 	document.getElementById('displayName').innerText = profile.display_name;
 	if (profile.images[0]) {
 		const profileImage = new Image(200);
 		profileImage.src = profile.images[0].url;
 		document.getElementById('avatar').appendChild(profileImage);
-		console.log(profileImage);
 		// document.getElementById('imgUrl').innerText = profile.images[0].url;
 	}
 	// document.getElementById('country').innerText = profile.country;
