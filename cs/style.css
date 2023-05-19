@@ -199,9 +199,6 @@ p {
   -o-object-fit: cover;
      object-fit: cover;
 }
-.showPlaylistsDiv .playBtn {
-  background-color: #fff;
-}
 
 @media (max-width: 1200px) {
   #avatar img {
