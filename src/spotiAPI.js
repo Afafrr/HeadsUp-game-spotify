@@ -1,3 +1,5 @@
+import { highlight } from './script';
+
 const clientId = '148c38e6a9b343db9520e03d3daa2b89';
 const params = new URLSearchParams(window.location.search);
 const code = params.get('code');
@@ -10,9 +12,8 @@ if (!code) {
 	const playlists = await getPlaylist(accessToken);
 	const topItems = await getUsersTopItems(accessToken);
 	populateUI(profile);
-	displayTrakcs(playlists);
+	displayPlaylists(playlists);
 	lastTracks(topItems);
-	console.log(topItems);
 }
 
 export async function redirectToAuthCodeFlow(clientId) {
@@ -25,7 +26,7 @@ export async function redirectToAuthCodeFlow(clientId) {
 	params.append('client_id', clientId);
 	params.append('response_type', 'code');
 	params.append('redirect_uri', 'http://localhost:5173/callback');
-	params.append('scope', 'user-read-private user-top-read');
+	params.append('scope', 'user-read-private user-top-read playlist-read-private');
 	params.append('code_challenge_method', 'S256');
 	params.append('code_challenge', challenge);
 
@@ -77,11 +78,18 @@ async function getPlaylist(token) {
 
 	return await result.json();
 }
-function displayTrakcs(playlists) {
+function displayPlaylists(playlists) {
 	playlists.items.forEach(element => {
-		const x = `<div class="bar Playlist"> <img src='${element.images[0].url}' height='40px'></img> <div class ='playlistName'>${element.name}</div></div> 
+		const x = `<div id="${element.id}" class="bar Playlist" > <img src='${element.images[0].url}' height='40px'></img> <div class ='playlistName'>${element.name}</div></div> 
 			`;
 		document.querySelector('.userPlaylists').insertAdjacentHTML('afterbegin', x);
+	});
+	document.querySelectorAll('.Playlist').forEach(item => {
+		item.addEventListener('click', () => {
+			console.log(item.id);
+			console.log(item.classList);
+			highlight();
+		});
 	});
 }
 
@@ -96,9 +104,9 @@ async function getUsersTopItems(token) {
 }
 
 function lastTracks(topItems) {
-	if ((topItems.items.length === 0)) {
+	if (topItems.items.length === 0) {
 		document.querySelector('h2').innerText = "You haven't listened to music for a month :c";
-	}else{
+	} else {
 		topItems.items.forEach(element => {
 			let allArtists = '';
 			element.artists.forEach(artist => {
@@ -112,7 +120,6 @@ function lastTracks(topItems) {
 			</div>`;
 			document.querySelector('.lastTracks').insertAdjacentHTML('beforeend', x);
 		});
-	
 	}
 }
 

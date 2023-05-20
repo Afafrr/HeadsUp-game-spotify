@@ -1,3 +1,4 @@
+
 const playlistBtn = document.querySelector('.playlistBtn');
 const showPlaylist = document.querySelector('.showPlaylists');
 const bgcBlur = document.querySelector('.bgcBlur');
@@ -16,7 +17,6 @@ document.querySelector('.bgcBlur').addEventListener('click', function () {
 	bgcBlur.classList.add('hide');
 });
 
-// document.querySelector('.bar .Playlist').addEventListener('click', function() {
-
-
-// })
+function highlight() {
+	item.classList.add('highlight');
+};
