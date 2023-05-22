@@ -1,4 +1,4 @@
-import { highlight } from './script';
+import * as script from './script.js';
 
 const clientId = '148c38e6a9b343db9520e03d3daa2b89';
 const params = new URLSearchParams(window.location.search);
@@ -78,20 +78,19 @@ async function getPlaylist(token) {
 
 	return await result.json();
 }
+
+
 function displayPlaylists(playlists) {
 	playlists.items.forEach(element => {
 		const x = `<div id="${element.id}" class="bar Playlist" > <img src='${element.images[0].url}' height='40px'></img> <div class ='playlistName'>${element.name}</div></div> 
 			`;
 		document.querySelector('.userPlaylists').insertAdjacentHTML('afterbegin', x);
 	});
-	document.querySelectorAll('.Playlist').forEach(item => {
-		item.addEventListener('click', () => {
-			console.log(item.id);
-			console.log(item.classList);
-			highlight();
-		});
-	});
+
+	script.getPlaylistID();
 }
+
+
 
 async function getUsersTopItems(token) {
 	let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5';
@@ -135,7 +134,7 @@ async function fetchProfile(token) {
 function populateUI(profile) {
 	document.getElementById('displayName').innerText = profile.display_name;
 	if (profile.images[0]) {
-		const profileImage = new Image(200);
+		const profileImage = new Image();
 		profileImage.src = profile.images[0].url;
 		document.getElementById('avatar').appendChild(profileImage);
 		// document.getElementById('imgUrl').innerText = profile.images[0].url;

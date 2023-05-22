@@ -1,4 +1,3 @@
-
 const playlistBtn = document.querySelector('.playlistBtn');
 const showPlaylist = document.querySelector('.showPlaylists');
 const bgcBlur = document.querySelector('.bgcBlur');
@@ -17,6 +16,19 @@ document.querySelector('.bgcBlur').addEventListener('click', function () {
 	bgcBlur.classList.add('hide');
 });
 
-function highlight() {
-	item.classList.add('highlight');
-};
+export function getPlaylistID() {
+	document.querySelectorAll('.Playlist').forEach(item => {
+		item.addEventListener('click', () => {
+			let selectedId = item.id;
+			console.log(selectedId);
+			unhighlight();
+			item.classList.add('highlight')
+		});
+	});
+}
+
+function unhighlight() {
+	document.querySelectorAll('.Playlist').forEach(item => {
+	item.classList.remove('highlight')
+	});
+}

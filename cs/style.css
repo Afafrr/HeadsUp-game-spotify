@@ -8,24 +8,25 @@
 
 html {
   font-size: 62.5%;
-  background-image: linear-gradient(#fff, rgba(95, 134, 141, 0.438)); /* fallback color */
-  height: 100%;
 }
 
 body {
   font-family: "Comme", sans-serif;
+  background-image: linear-gradient(#fff, rgba(95, 134, 141, 0.438)); /* fallback color */
+  height: 100vh;
 }
 
 h1 {
-  margin: 2%;
+  padding: 20px;
   text-align: center;
-  font-size: 5rem;
+  font-size: 3rem;
   letter-spacing: 3px;
+  transition: font-size 0.3s;
 }
 
 h2 {
   text-align: center;
-  font-size: 2.3rem;
+  font-size: 2rem;
   margin-bottom: 5px;
 }
 
@@ -33,11 +34,12 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin: 20px;
+  margin-top: 20px;
 }
 
 .BTN {
-  padding: 20px 80px;
+  padding: 20px 30px;
   text-decoration: none;
   font-size: 2rem;
   background-color: #fff;
@@ -60,12 +62,12 @@ h2 {
 
 .bgcBlur {
   position: absolute;
-  height: 100vh;
+  height: 100%;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.3);
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
   z-index: 5;
-  inset: 0px;
 }
 
 #profile {
@@ -76,27 +78,21 @@ h2 {
 
 .profileInfo {
   display: grid;
-  grid-template-columns: auto 1fr 1fr;
-  width: 80vw;
-  max-width: 1200px;
-  min-height: 450px;
+  justify-content: center;
+  gap: 20px;
+  width: 95vw;
+  padding: 40px 25px 50px 25px;
   background-color: rgb(90, 192, 233);
-  border-radius: 150px;
-}
-
-p {
-  display: inline-block;
+  border-radius: 100px;
 }
 
 #avatar {
   position: relative;
-  top: 60px;
-  left: 60px;
 }
 #avatar img {
   transition: height 0.3s, width 0.3s;
-  height: 200px;
-  width: 200px;
+  height: 100px;
+  width: 100px;
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
@@ -110,19 +106,15 @@ p {
 }
 
 .lastTracks {
-  display: grid;
-  justify-self: center;
-  align-self: center;
   position: relative;
-  right: 20px;
-  margin-right: 50px;
-  max-width: 350px;
+  min-width: 200px;
+  max-width: 450px;
 }
 .lastTracks .bar:nth-child(odd) {
   background-color: rgba(255, 255, 255, 0.8);
 }
 .lastTracks .bar {
-  padding: 10px 10px;
+  padding: 5px 10px;
   border-radius: 20px;
 }
 .lastTracks .bar .songArtistNames {
@@ -144,6 +136,7 @@ p {
 .lastTracks .bar img {
   position: relative;
   height: 50px;
+  border-radius: 3px;
 }
 
 .showPlaylists {
@@ -157,6 +150,7 @@ p {
 .showPlaylists .playBtn {
   position: absolute;
   bottom: 60px;
+  padding: 20px 60px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -165,12 +159,13 @@ p {
   position: relative;
   left: 50%;
   top: 50%;
+  transform: translate(-50%, -50%);
   max-height: 60vh;
   width: 80vw;
   max-width: 600px;
+  min-width: 200px;
   background-color: rgba(221, 221, 221, 0.6);
   border-radius: 10px;
-  transform: translate(-50%, -50%);
   overflow-y: auto;
 }
 .showPlaylistsDiv .userPlaylists {
@@ -195,8 +190,8 @@ p {
 .showPlaylistsDiv img {
   width: 6rem;
   height: 6rem;
-  margin-right: 50px;
-  margin-left: 50px;
+  margin-right: 20px;
+  margin-left: 10px;
   justify-self: end;
   -o-object-fit: cover;
      object-fit: cover;
@@ -221,9 +216,44 @@ p {
   z-index: 15;
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 600px) {
   #avatar img {
-    height: 150px;
     width: 150px;
+    height: 150px;
+  }
+}
+@media (min-width: 768px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  h1 {
+    position: absolute;
+    top: 20px;
+    font-size: 4.5rem;
+  }
+  #avatar img {
+    width: 170px;
+    height: 170px;
+  }
+  .profileInfo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 90vw;
+    max-width: 1200px;
+    padding: 50px;
+    border-radius: 150px;
+  }
+  .lastTracks {
+    margin-right: 25px;
+    justify-self: end;
+  }
+}
+@media (min-width: 1200px) {
+  #avatar img {
+    width: 200px;
+    height: 200px;
   }
 }/*# sourceMappingURL=style.css.map */
