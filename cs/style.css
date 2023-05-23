@@ -216,6 +216,12 @@ h2 {
   z-index: 15;
 }
 
+.disableBtnClick {
+  background-color: #ccc;
+  color: #eee;
+  pointer-events: none;
+}
+
 @media (min-width: 600px) {
   #avatar img {
     width: 150px;

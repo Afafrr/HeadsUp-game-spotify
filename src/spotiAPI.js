@@ -72,6 +72,7 @@ export async function getAccessToken(clientId, code) {
 	return access_token;
 }
 
+//getting all user playlists 
 async function getPlaylist(token) {
 	const result = await fetch(`https://api.spotify.com/v1/me/playlists`, {
 		method: 'GET',
@@ -81,6 +82,7 @@ async function getPlaylist(token) {
 	return await result.json();
 }
 
+//displayling user playlists
 function displayPlaylists(playlists) {
 	playlists.items.forEach(element => {
 		const x = `<div id="${element.id}" class="bar Playlist" > <img src='${element.images[0].url}' height='40px'></img> <div class ='playlistName'>${element.name}</div></div> `;
@@ -91,6 +93,7 @@ function displayPlaylists(playlists) {
 	script.getPlaylistID();
 }
 
+//getting top 5 listened songs in 30days
 async function getUsersTopItems(token) {
 	let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5';
 	const result = await fetch(`${url}`, {
@@ -101,6 +104,7 @@ async function getUsersTopItems(token) {
 	return await result.json();
 }
 
+//displaying prev function
 function lastTracks(topItems) {
 	if (topItems.items.length === 0) {
 		document.querySelector('h2').innerText = "You haven't listened to music for a month :c";
@@ -121,6 +125,7 @@ function lastTracks(topItems) {
 	}
 }
 
+//getting info about user profile
 async function fetchProfile(token) {
 	const result = await fetch('https://api.spotify.com/v1/me', {
 		method: 'GET',
@@ -130,6 +135,7 @@ async function fetchProfile(token) {
 	return await result.json();
 }
 
+//displaying user info
 function populateUI(profile) {
 	document.getElementById('displayName').innerText = profile.display_name;
 	if (profile.images[0]) {
@@ -150,11 +156,7 @@ function populateUI(profile) {
 // 	return songs;
 // }
 
-
-
-
-
-
+//getting selected playlist items (trakcs)
 export async function getSongsApi(playlist_id) {
 	const result = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
 		method: 'GET',
