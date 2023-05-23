@@ -1,6 +1,9 @@
+import {getSongsApi} from './spotiAPI'
+
 const playlistBtn = document.querySelector('.playlistBtn');
 const showPlaylist = document.querySelector('.showPlaylists');
 const bgcBlur = document.querySelector('.bgcBlur');
+let selectedId;
 
 playlistBtn.addEventListener('click', function () {
 	showPlaylist.classList.remove('hide');
@@ -11,6 +14,7 @@ document.querySelector('.closePlaylists').addEventListener('click', function () 
 	showPlaylist.classList.add('hide');
 	bgcBlur.classList.add('hide');
 });
+
 document.querySelector('.bgcBlur').addEventListener('click', function () {
 	showPlaylist.classList.add('hide');
 	bgcBlur.classList.add('hide');
@@ -19,16 +23,21 @@ document.querySelector('.bgcBlur').addEventListener('click', function () {
 export function getPlaylistID() {
 	document.querySelectorAll('.Playlist').forEach(item => {
 		item.addEventListener('click', () => {
-			let selectedId = item.id;
+			selectedId = item.id;
 			console.log(selectedId);
-			unhighlight();
-			item.classList.add('highlight')
+			highlightOnOff(item);
 		});
 	});
 }
 
-function unhighlight() {
-	document.querySelectorAll('.Playlist').forEach(item => {
-	item.classList.remove('highlight')
+function highlightOnOff(item) {
+	document.querySelectorAll('.Playlist').forEach(e => {
+		e.classList.remove('highlight');
+		item.classList.add('highlight');
 	});
 }
+
+document.querySelector('.playBtn').addEventListener('click', function () {
+	console.log(selectedId);
+	console.log(getSongsApi(selectedId))
+});

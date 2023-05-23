@@ -3,11 +3,12 @@ import * as script from './script.js';
 const clientId = '148c38e6a9b343db9520e03d3daa2b89';
 const params = new URLSearchParams(window.location.search);
 const code = params.get('code');
+let accessToken;
 
 if (!code) {
 	redirectToAuthCodeFlow(clientId);
 } else {
-	const accessToken = await getAccessToken(clientId, code);
+	accessToken = await getAccessToken(clientId, code);
 	const profile = await fetchProfile(accessToken);
 	const playlists = await getPlaylist(accessToken);
 	const topItems = await getUsersTopItems(accessToken);
@@ -32,6 +33,7 @@ export async function redirectToAuthCodeFlow(clientId) {
 
 	document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
 }
+
 function generateCodeVerifier(length) {
 	let text = '';
 	let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -79,18 +81,15 @@ async function getPlaylist(token) {
 	return await result.json();
 }
 
-
 function displayPlaylists(playlists) {
 	playlists.items.forEach(element => {
-		const x = `<div id="${element.id}" class="bar Playlist" > <img src='${element.images[0].url}' height='40px'></img> <div class ='playlistName'>${element.name}</div></div> 
-			`;
+		const x = `<div id="${element.id}" class="bar Playlist" > <img src='${element.images[0].url}' height='40px'></img> <div class ='playlistName'>${element.name}</div></div> `;
+
 		document.querySelector('.userPlaylists').insertAdjacentHTML('afterbegin', x);
 	});
 
 	script.getPlaylistID();
 }
-
-
 
 async function getUsersTopItems(token) {
 	let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5';
@@ -145,4 +144,22 @@ function populateUI(profile) {
 	// document.getElementById('uri').setAttribute('href', profile.external_urls.spotify);
 	// document.getElementById('url').innerText = profile.href;
 	// document.getElementById('url').setAttribute('href', profile.href);
+}
+// export async function getSongs(accessToken, playlist_id) {
+// 	const songs = await getSongsApi(accessToken, playlist_id);
+// 	return songs;
+// }
+
+
+
+
+
+
+export async function getSongsApi(playlist_id) {
+	const result = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
+		method: 'GET',
+		headers: { Authorization: `Bearer ${accessToken}` },
+	});
+
+	return await result.json();
 }
