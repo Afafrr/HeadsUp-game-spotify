@@ -70,6 +70,7 @@ export function randomSongs(songs) {
 	}
 	//getting info from prev indexes
 	let songInfo = [];
+	console.log(songInfo)
 	toGameIndexes.forEach(e => {
 		let track = songs.items[e].track;
 		let name = track.name;
