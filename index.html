@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Spotify Profile</title>
     <link rel="stylesheet" href="./cs/style.css">
+    <link rel="stylesheet" href="./cs/gameStyles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comme:wght@400;700&display=swap" rel="stylesheet">
@@ -15,8 +16,14 @@
 </head>
 
 <body>
-
     <h1>Hello, <span id="displayName"></span></h1>
+
+    <div class="settingsGear"><i class="fa-solid fa-gear"></i></div>
+    <div class="settings hide">
+        <span>Duration of rounds (1-90s)</span>
+        <input id='timeOfRound' type="number" min="1" inputmode="numeric" max="90" value="20">
+    </div>
+
     <section id="profile">
         <div class="profileInfo">
             <div id="avatar">
@@ -33,10 +40,10 @@
                 <h2>Your fav tracks in this<br>month:</h2>
             </div>
         </div>
+        <div class="playlistButton">
+            <a class="playlistBtn BTN">Show my playlists</a>
     </section>
 
-    <div class="playlistButton">
-        <a class="playlistBtn BTN">Show my playlists</a>
     </div>
     <section class="showPlaylists hide">
         <div class="showPlaylistsDiv">
@@ -44,10 +51,32 @@
             <button class="closePlaylists"><i class="fa-solid fa-xmark"></i></button>
             <div class="userPlaylists"></div>
         </div>
-        <!-- <a href="./game.html" class="playBtn BTN disableBtnClick" >PLAY</a> -->
-        <a class="playBtn BTN disableBtnClick" >PLAY</a>
+        <a class="playBtn BTN disableBtnClick">PLAY</a>
     </section>
     <div class="bgcBlur hide"></div>
+    <div id="game" class="hide">
+        <div class="countdownDiv hide"><span class="countdown"></span></div>
+        <div class="card">
+            <span class="gameCountdown"></span>
+            <div class="songCard">
+                <div class="songImage"></div>
+                <div class="songInfo">
+                    <p class="title"></p>
+                    <p class="GameArtist"></p>
+                </div>
+            </div>
+            <div class="snippet"><audio controls> </audio></div>
+            
+            <a class="nextSong"><i class="fa-solid fa-forward"></i> </a>
+        </div>
+
+        <a class="getBackBtn"><i class="fa-solid fa-circle-chevron-left"></i> </a>
+
+        <div class="gameButtons hide">
+            <a class="replay"><i class="fa-solid fa-rotate-right"></i></a>
+            <span>PLAY AGAIN</span>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -2,24 +2,26 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
 }
 
 html {
   font-size: 62.5%;
+  min-height: 100%;
 }
 
 body {
   font-family: "Comme", sans-serif;
   background-image: linear-gradient(#fff, rgba(95, 134, 141, 0.438)); /* fallback color */
-  height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
-h1 {
-  padding: 20px;
+body h1 {
+  position: relative;
+  margin: 15px;
   text-align: center;
-  font-size: 3rem;
+  font-size: 2rem;
   letter-spacing: 3px;
   transition: font-size 0.3s;
 }
@@ -30,12 +32,60 @@ h2 {
   margin-bottom: 5px;
 }
 
-.playlistButton {
+.settingsGear {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  font-size: 2rem;
+  z-index: 5;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.settings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 40vh;
+  border: solid 1px black;
+  background-color: #fff;
+  font-size: 2rem;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
-  margin-top: 20px;
+  flex-direction: column;
+  z-index: 20;
+}
+.settings span {
+  margin: 20px 50px;
+  font-size: 2.5rem;
+}
+.settings input {
+  font-size: 3rem;
+  text-align: center;
+  width: 80px;
+  height: 60px;
+  border: solid #000000;
+}
+
+#profile {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 95vw;
+  height: 95vh;
+}
+
+.playlistButton {
+  position: absolute;
+  bottom: 4vh;
 }
 
 .BTN {
@@ -70,17 +120,12 @@ h2 {
   z-index: 5;
 }
 
-#profile {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .profileInfo {
+  position: relative;
   display: grid;
   justify-content: center;
   gap: 20px;
-  width: 95vw;
+  width: 100%;
   padding: 40px 25px 50px 25px;
   background-color: rgb(90, 192, 233);
   border-radius: 100px;
@@ -231,12 +276,10 @@ h2 {
 @media (min-width: 768px) {
   body {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  h1 {
-    position: absolute;
+  body h1 {
     top: 20px;
     font-size: 4.5rem;
   }
@@ -255,6 +298,12 @@ h2 {
   .lastTracks {
     margin-right: 25px;
     justify-self: end;
+  }
+}
+@media (min-width: 769px) {
+  .playlistButton {
+    position: relative;
+    top: 50px;
   }
 }
 @media (min-width: 1200px) {

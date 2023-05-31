@@ -1,13 +1,17 @@
 import { getSongsApi } from './spotiAPI';
+import { start } from './game';
 
 const playlistBtn = document.querySelector('.playlistBtn');
 const showPlaylist = document.querySelector('.showPlaylists');
 const bgcBlur = document.querySelector('.bgcBlur');
 const playBtn = document.querySelector('.playBtn');
+const settings = document.querySelector('.settings');
 let selectedId;
-let songs;
-let usedIndexes = [];
 let toGameIndexes = [];
+export let songs;
+export let usedIndexes = [];
+export let firstSet;
+export let roundTime;
 
 //button which shows user playlists
 playlistBtn.addEventListener('click', function () {
@@ -21,9 +25,26 @@ document.querySelector('.closePlaylists').addEventListener('click', function () 
 	bgcBlur.classList.add('hide');
 });
 
-document.querySelector('.bgcBlur').addEventListener('click', function () {
+bgcBlur.addEventListener('click', function () {
 	showPlaylist.classList.add('hide');
 	bgcBlur.classList.add('hide');
+
+	if (!settings.classList.contains('hide')) {
+		let selectedTime = document.getElementById('timeOfRound').value;
+
+		if (Number.isInteger(Number(selectedTime)) && selectedTime > 0 && selectedTime <= 90) {
+			roundTime = selectedTime;
+			settings.classList.add('hide');
+		} else {
+			alert('Number is out of range!');
+			settings.classList.add('hide');
+		}
+	}
+});
+
+document.querySelector('.settingsGear').addEventListener('click', function () {
+	settings.classList.remove('hide');
+	bgcBlur.classList.remove('hide');
 });
 
 //after clicking play button func gets one selected playlists Id
@@ -32,7 +53,6 @@ export function getPlaylistID() {
 		item.addEventListener('click', () => {
 			selectedId = item.id;
 			highlightOnOff(item);
-			// console.log(navigator.userAgent);
 		});
 	});
 }
@@ -48,7 +68,15 @@ function highlightOnOff(item) {
 //getting songs from selected playlist
 playBtn.addEventListener('click', async function () {
 	songs = await getSongsApi(selectedId);
-	randomSongs(songs);
+
+	if (songs.items.length < 6) {
+		alert('Playlist has to be longer than 5 tracks!');
+	} else {
+		start();
+		document.querySelector('.countdownDiv').classList.remove('hide');
+		document.getElementById('profile').classList.add('hide');
+		document.getElementById('game').classList.remove('hide');
+	}
 });
 
 //returns 5 songs with name, artist and image
@@ -57,29 +85,32 @@ export function randomSongs(songs) {
 	const min = 0;
 	toGameIndexes = [];
 
-	//generatring non-repetable random number from given playlist 
-	while (toGameIndexes.length <= 5) {
+	//generatring non-repetable random number from given playlist
+	while (toGameIndexes.length < 6) {
 		let ranNum = Math.floor(Math.random() * (max - min) + min);
 		if (!usedIndexes.includes(ranNum)) {
 			usedIndexes.push(ranNum);
 			toGameIndexes.push(ranNum);
 		}
-		if (usedIndexes >= max - 7) {
+		if (usedIndexes >= max - 6) {
 			break;
 		}
 	}
-	//getting info from prev indexes
+
+	//getting info about songs from prev indexes
 	let songInfo = [];
-	console.log(songInfo)
 	toGameIndexes.forEach(e => {
 		let track = songs.items[e].track;
 		let name = track.name;
 		let img = track.album.images;
 		let artists = [];
-		let snippet = track.preview_url
+		let snippet = track.preview_url;
 
 		track.artists.forEach(artist => artists.push(artist.name));
-		songInfo.push({name, artists, img, snippet});
+		songInfo.push({ name, artists, img, snippet });
 	});
-	return songInfo
+	console.log(toGameIndexes);
+	console.log(usedIndexes);
+
+	return songInfo;
 }

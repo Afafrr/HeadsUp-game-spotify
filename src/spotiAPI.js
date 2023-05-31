@@ -2,10 +2,10 @@ import * as script from './script.js';
 
 const clientId = '148c38e6a9b343db9520e03d3daa2b89';
 const params = new URLSearchParams(window.location.search);
-const code = params.get('code');
-let accessToken;
+ const code = params.get('code');
+ let accessToken;
 
-if (!code) {
+if (!code || window.location.pathname === '/game') {
 	redirectToAuthCodeFlow(clientId);
 } else {
 	accessToken = await getAccessToken(clientId, code);
@@ -54,7 +54,6 @@ async function generateCodeChallenge(codeVerifier) {
 
 export async function getAccessToken(clientId, code) {
 	const verifier = localStorage.getItem('verifier');
-
 	const params = new URLSearchParams();
 	params.append('client_id', clientId);
 	params.append('grant_type', 'authorization_code');
@@ -72,7 +71,7 @@ export async function getAccessToken(clientId, code) {
 	return access_token;
 }
 
-//getting all user playlists 
+//getting all user playlists
 async function getPlaylist(token) {
 	const result = await fetch(`https://api.spotify.com/v1/me/playlists`, {
 		method: 'GET',
@@ -151,10 +150,7 @@ function populateUI(profile) {
 	// document.getElementById('url').innerText = profile.href;
 	// document.getElementById('url').setAttribute('href', profile.href);
 }
-// export async function getSongs(accessToken, playlist_id) {
-// 	const songs = await getSongsApi(accessToken, playlist_id);
-// 	return songs;
-// }
+
 
 //getting selected playlist items (trakcs)
 export async function getSongsApi(playlist_id) {
@@ -165,3 +161,4 @@ export async function getSongsApi(playlist_id) {
 
 	return await result.json();
 }
+
